@@ -10,8 +10,6 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use('/api/users', require('./routes/users'))
 
-app.use(errorHandler)
-
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 })

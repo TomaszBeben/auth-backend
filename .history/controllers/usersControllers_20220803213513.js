@@ -11,7 +11,7 @@ const postUser = (req, res) => {
   console.log(req.body);
   if(!req.body.test) {
     res.status(400)
-    throw new Error('Please add a test field')
+    throw new Error('')
   }
 }
 

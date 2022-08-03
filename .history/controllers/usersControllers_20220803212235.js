@@ -9,10 +9,6 @@ const getUsers = (req, res) => {
 const postUser = (req, res) => {
   // res.status(200).json({ message: 'Post User' })
   console.log(req.body);
-  if(!req.body.test) {
-    res.status(400)
-    throw new Error('Please add a test field')
-  }
 }
 
 // @desc   Update Users
