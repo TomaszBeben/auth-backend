@@ -28,29 +28,13 @@ const postUser = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const user = await Auth.findById(req.params.id)
 
-  if (!user) {
-    res.status(400)
-    throw new Error('user not found')
-  }
-
-  const updateUser = await Auth.findByIdAndUpdate(req.params.id, req.body, { new: true })
-
-  res.status(200).json(updateUser)
+  res.status(200).json({ message: `Update User ${req.params.id}` })
 })
 
 // @desc   Delete Users
 // @route  /api/users/:id
 const deleteUser = asyncHandler(async (req, res) => {
-  const user = await Auth.findById(req.params.id)
-
-  if (!user) {
-    res.status(400)
-    throw new Error('user not found')
-  }
-
-  await user.remove()
-
-  res.status(200).json({id: req.params.id})
+  res.status(200).json({ message: `Update User ${req.params.id}` })
 })
 
 module.exports = {
