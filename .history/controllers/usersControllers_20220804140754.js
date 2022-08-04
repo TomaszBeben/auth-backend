@@ -19,8 +19,6 @@ const postUser = asyncHandler(async (req, res) => {
   const user = await Auth.create({
     test: req.body.test
   })
-
-  res.status(200),json(user)
 })
 
 // @desc   Update Users

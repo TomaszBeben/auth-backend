@@ -16,11 +16,7 @@ const postUser = asyncHandler(async (req, res) => {
     throw new Error('Please add a test field')
   }
 
-  const user = await Auth.create({
-    test: req.body.test
-  })
-
-  res.status(200),json(user)
+  const user = 
 })
 
 // @desc   Update Users

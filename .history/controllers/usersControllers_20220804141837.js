@@ -5,7 +5,7 @@ const Auth = require('../models/authModel')
 // @route  /api/users
 const getUsers = asyncHandler(async (req, res) => {
   const users = await Auth.find()
-  res.status(200).json(users)
+  res.status(200).JSON(users)
 })
 
 // @desc   Post Users
@@ -20,19 +20,19 @@ const postUser = asyncHandler(async (req, res) => {
     test: req.body.test
   })
 
-  res.status(200),json(user)
+  res.status(200),JSON(user)
 })
 
 // @desc   Update Users
 // @route  /api/users/:id
 const updateUser = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: `Update User ${req.params.id}` })
+  res.status(200).JSON({ message: `Update User ${req.params.id}` })
 })
 
 // @desc   Delete Users
 // @route  /api/users/:id
 const deleteUser = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: `Update User ${req.params.id}` })
+  res.status(200).JSON({ message: `Update User ${req.params.id}` })
 })
 
 module.exports = {

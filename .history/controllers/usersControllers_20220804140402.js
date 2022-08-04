@@ -1,11 +1,10 @@
 const asyncHandler = require('express-async-handler')
-const Auth = require('../models/authModel')
+const Auth = require('../model/authModel')
 
 // @desc   Get Users
 // @route  /api/users
 const getUsers = asyncHandler(async (req, res) => {
-  const users = await Auth.find()
-  res.status(200).json(users)
+  res.status(200).json({ message: 'Get Users' })
 })
 
 // @desc   Post Users
@@ -15,12 +14,6 @@ const postUser = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('Please add a test field')
   }
-
-  const user = await Auth.create({
-    test: req.body.test
-  })
-
-  res.status(200),json(user)
 })
 
 // @desc   Update Users
