@@ -1,23 +1,23 @@
 const asyncHandler = require('express-async-handler')
-const Auth = require('../models/authModel')
+const goal = require('../models/goalModel')
 
 // @desc   Get Users
 // @route  /api/users
 const getUsers = asyncHandler(async (req, res) => {
-  const users = await Auth.find()
+  const users = await goal.find()
   res.status(200).json(users)
 })
 
 // @desc   Post Users
 // @route  /api/users
 const postUser = asyncHandler(async (req, res) => {
-  if (!req.body.test) {
+  if (!req.body.text) {
     res.status(400)
-    throw new Error('Please add a test field')
+    throw new Error('Please add a text field')
   }
 
-  const user = await Auth.create({
-    test: req.body.test
+  const user = await goal.create({
+    text: req.body.text
   })
 
   res.status(200).json(user)
@@ -26,14 +26,14 @@ const postUser = asyncHandler(async (req, res) => {
 // @desc   Update Users
 // @route  /api/users/:id
 const updateUser = asyncHandler(async (req, res) => {
-  const user = await Auth.findById(req.params.id)
+  const user = await goal.findById(req.params.id)
 
   if (!user) {
     res.status(400)
     throw new Error('user not found')
   }
 
-  const updateUser = await Auth.findByIdAndUpdate(req.params.id, req.body, { new: true })
+  const updateUser = await goal.findByIdAndUpdate(req.params.id, req.body, { new: true })
 
   res.status(200).json(updateUser)
 })
@@ -41,7 +41,7 @@ const updateUser = asyncHandler(async (req, res) => {
 // @desc   Delete Users
 // @route  /api/users/:id
 const deleteUser = asyncHandler(async (req, res) => {
-  const user = await Auth.findById(req.params.id)
+  const user = await goal.findById(req.params.id)
 
   if (!user) {
     res.status(400)
