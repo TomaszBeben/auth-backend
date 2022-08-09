@@ -1,3 +1,11 @@
-const test = () => console.log('123');
+const express = require('express')
+const router = express.Router()
 
-module.exports = test
+const { registerUser, loginUser, getCredential } = require('../controllers/usersControllers')
+
+router.post('/', registerUser)
+router.post('/login', loginUser)
+router.get('/me', getCredential)
+
+
+module.exports = router

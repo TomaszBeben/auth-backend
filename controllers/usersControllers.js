@@ -1,61 +1,64 @@
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
-const goal = require('../models/goalModel')
+const User = require('../models/userModel')
 
-// @desc   Get Users
-// @route  /api/users
-const getUsers = asyncHandler(async (req, res) => {
-  const users = await goal.find()
-  res.status(200).json(users)
-})
 
-// @desc   Post Users
-// @route  /api/users
-const postUser = asyncHandler(async (req, res) => {
-  if (!req.body.text) {
+// @desc   Register User
+// @route  POST /api/users
+const registerUser = asyncHandler(async (req, res) => {
+  const { name, email, password } = req.body
+
+  //check if all fields are added
+  if (!name || !email || !password) {
     res.status(400)
-    throw new Error('Please add a text field')
+    throw new Error('Please add all fields')
   }
 
-  const user = await goal.create({
-    text: req.body.text
+  //check if user exist
+  const userExist = await User.findOne({ email })
+
+  if (userExist) {
+    res.status(400)
+    throw new Error('User already exist')
+  }
+
+  // hashing password
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(password, salt)
+
+  const user = await User.create({
+    name,
+    email,
+    password: hashedPassword
   })
 
-  res.status(200).json(user)
+  if (user) {
+    res.status(200).json({
+      _id: user.id,
+      name: user.name,
+      email: user.email
+    })
+  } else {
+    res.status(400)
+    throw new Error('Invalid user data')
+  }
 })
 
-// @desc   Update Users
-// @route  /api/users/:id
-const updateUser = asyncHandler(async (req, res) => {
-  const user = await goal.findById(req.params.id)
-
-  if (!user) {
-    res.status(400)
-    throw new Error('user not found')
-  }
-
-  const updateUser = await goal.findByIdAndUpdate(req.params.id, req.body, { new: true })
-
-  res.status(200).json(updateUser)
+// @desc   Authenticate a User
+// @route  POST /api/users/login
+const loginUser = asyncHandler(async (req, res) => {
+  res.json({ message: 'login user' })
 })
 
-// @desc   Delete Users
-// @route  /api/users/:id
-const deleteUser = asyncHandler(async (req, res) => {
-  const user = await goal.findById(req.params.id)
-
-  if (!user) {
-    res.status(400)
-    throw new Error('user not found')
-  }
-
-  await user.remove()
-
-  res.status(200).json({id: req.params.id})
+// @desc   Register Users
+// @route  GET /api/users/me
+const getCredential = asyncHandler(async (req, res) => {
+  res.json({ message: 'get my credentials' })
 })
 
 module.exports = {
-  getUsers,
-  postUser,
-  updateUser,
-  deleteUser,
+  registerUser,
+  loginUser,
+  getCredential
 }
