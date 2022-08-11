@@ -41,6 +41,11 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       token: generateToken(user._id)
     })
+
+    //test!!!!!!!!!!!!!!!!!!!!!!!
+    console.log(req.headers.authorization);
+    //test!!!!!!!!!!!!!!!!!!!!!!!
+
   } else {
     res.status(400)
     throw new Error('Invalid user data')
@@ -72,7 +77,13 @@ const loginUser = asyncHandler(async (req, res) => {
 // @desc   Register Users
 // @route  GET /api/users/me
 const getCredential = asyncHandler(async (req, res) => {
-  res.json({ message: 'get my credentials' })
+  const {_id, name, email} = await User.findById(req.user.id)
+
+  res.json({
+    id: _id,
+    name,
+    email
+  })
 })
 
 // Generate JWT
